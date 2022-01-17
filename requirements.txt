@@ -5,4 +5,3 @@ streamlit
 requests
 datetime
 PyPDF2
-urllib.parse
