@@ -50,7 +50,26 @@ def get_date_from_pdf(pdf_url, debug=True):
     else:
       return 'pdf_date'
       
-      
+    
+liste_patho = ['allergies alimentaires', 'allergies respiratoires',
+               'allergènes spécifiques', 'anémie hémolytique auto-immune',
+               'bilan de thrombophilie (facteur biologique de risque)',
+               'bilharziose', 'carence en fer', 'chlamydia trachomatis',
+               'cirrhose non compliquée', 'coqueluche', 'covid long',
+               'dénutrition', "dépistage cancer du col de l'utérus",
+               'dépistage de la maladie rénale chronique',
+               'dépistage dysthyroïdie', 'helicobacter pylori',
+               'herpès cutanéo-muqueux', 'hypoparathyroïdie',
+               'hémoglobinopathies', 'hépatite auto-immune',
+               'infections génitales basses (cervicite non compliquée)', 'llc',
+               'lupus systémique', 'maladie coeliaque', 'maladie de lyme',
+               'maladie de willebrand', 'maladie de wilson', 'méno/métrorragies ',
+               'ménopause', 'pancréatite aigüe', 'polyarthrite rhumatoïde',
+               'prescription non spécifique', 'spondyloarthrite', 'syphilis',
+               'tsh basse 1er bilan', 'tsh élevée 1er bilan', 'urétrite',
+               'vascularite nécrosante systémique', 'vha', 'vhb', 'vhc', 'vhe',
+               'vih']
+
 total_time = perf_counter()
 
 for word_to_look_for in liste_patho:
