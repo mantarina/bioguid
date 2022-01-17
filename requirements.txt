@@ -3,3 +3,10 @@ BeautifulSoup
 pandas
 unidecode
 streamlit
+requests
+re
+datetime
+time
+io
+PyPDF2
+urllib.parse
