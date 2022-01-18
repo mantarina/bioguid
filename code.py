@@ -11,7 +11,7 @@ from time import perf_counter
 import streamlit as st
 
 # Pour obtenir uniquement les ALDs, debug_var doit être égal à True
-debug_var = True
+debug = False
 
 pd.set_option('display.width', 70000000)
 pd.set_option('display.max_columns', None)
@@ -26,9 +26,10 @@ df_bioguid_full = pd.DataFrame()
 # Obtenir la date du pdf augmente considérablement le temps de chargement
 
 @st.cache
-def get_date_from_pdf(pdf_url, debug=True):
-    if not debug:
-
+def get_date_from_pdf(pdf_url):
+    if debug:
+        return 'pdf_date'
+    else:
         # N'intérompt pas le code sir le fichier est un zip
         if '.zip' in pdf_url:
             return 'ZIP DETECTÉ'
@@ -47,10 +48,8 @@ def get_date_from_pdf(pdf_url, debug=True):
         # date_en_us = datetime_date.strftime("%m/%d/%Y")
 
         return date_fr_fr
-    else:
-      return 'pdf_date'
-      
     
+      
 liste_patho = ['allergies alimentaires', 'allergies respiratoires',
                'allergènes spécifiques', 'anémie hémolytique auto-immune',
                'bilan de thrombophilie (facteur biologique de risque)',
@@ -69,6 +68,8 @@ liste_patho = ['allergies alimentaires', 'allergies respiratoires',
                'tsh basse 1er bilan', 'tsh élevée 1er bilan', 'urétrite',
                'vascularite nécrosante systémique', 'vha', 'vhb', 'vhc', 'vhe',
                'vih']
+
+liste_patho = ['syphilis', 'rhumatoide']
 
 total_time = perf_counter()
 
@@ -163,7 +164,7 @@ for word_to_look_for in liste_patho:
             # Récupère tous les liens des PDFs dans le bloc Documents
             article_soup = BeautifulSoup(article_html.text, 'html.parser').find_all('div', {"class": "bloc-docs"})
 
-            pdf_dict = list()
+            pdf_list = list()
 
             #print('Liste des PDFs :')
             for line_html in article_soup:
