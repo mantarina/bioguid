@@ -10,7 +10,7 @@ from datetime import datetime
 from time import perf_counter
 import streamlit as st
 
-# Pour obtenir uniquement les ALDs, debug_var doit être égal à True
+# Pour obtenir uniquement les ALDs, debug doit être égal à True
 debug = False
 
 pd.set_option('display.width', 70000000)
@@ -139,7 +139,7 @@ for word_to_look_for in liste_patho:
 
             # DEBUG, NE SELECTIONNE QUE L'ARTICLE ALD
             # Si un article commence par ALD dans la liste de résultats
-            if not re.findall(r'^ALD', article_title) and debug_var:
+            if not re.findall(r'^ALD', article_title) and debug:
                 continue
 
             article_url = article.find('a').get('href')
