@@ -163,7 +163,7 @@ for word_to_look_for in liste_patho:
             # Récupère tous les liens des PDFs dans le bloc Documents
             article_soup = BeautifulSoup(article_html.text, 'html.parser').find_all('div', {"class": "bloc-docs"})
 
-            pdf_dict = dict()
+            pdf_dict = list()
 
             #print('Liste des PDFs :')
             for line_html in article_soup:
@@ -178,21 +178,21 @@ for word_to_look_for in liste_patho:
 
                 # Récupère tous les liens des pdfs des articles
                 for pdf_html, pdf_true_html in zip(pdfs_html, pdfs_true_html):
-                    pdf_title, pdf_href = pdf_html.get('title'), unquote(pdf_html.get('href'))
+                    pdf_title, pdf_href = pdf_true_html.get('title'), unquote(pdf_html.get('href'))
                     pdf_link = pdf_href.replace("https://core.xvox.fr/readPDF/has-sante.fr/", "").replace("+", "%20")
 
                     # Affiche uniquement le bon pdf pour les ALDs
                     if re.findall(r'^ALD', article_title):
                         if 'apald' in pdf_true_html.get('href') or 'actes-et-prestations' in pdf_true_html.get('href'):
                             print(pdf_link)
-                            pdf_dict[pdf_link] = get_date_from_pdf(pdf_link)
+                            pdf_list.append({'title': pdf_title, 'date': get_date_from_pdf(pdf_link), 'link': pdf_link})
 
                     else:
                         print(pdf_link)
-                        pdf_dict[pdf_link] = get_date_from_pdf(pdf_link)
+                        pdf_list.append({'title': pdf_title, 'date': get_date_from_pdf(pdf_link), 'link': pdf_link})
 
             # Ajoute une nouvelle colonne au dataframe en fonction de tous les liens pdf
-            article_dict_for_df['liens_pdf'] = pdf_dict
+            article_dict_for_df['liens_pdf'] = pdf_list
 
             df_bioguid = df_bioguid.append(article_dict_for_df, ignore_index=True)
                         
@@ -211,4 +211,4 @@ for word_to_look_for in liste_patho:
 print(f"\nTemps total d'execution :", round(perf_counter() - total_time, 2), 'secondes')
 
 
-print(df_bioguid_full)
+st.write(df_bioguid_full)
